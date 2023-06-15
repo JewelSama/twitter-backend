@@ -30,7 +30,13 @@ router.post('/', async(req, res) => {
 router.get('/', async(req, res) => {
 
     try {
-        const allTweets = await prisma.tweet.findMany();
+        // const allTweets = await prisma.tweet.findMany({ include: { user: true } });
+        const allTweets = await prisma.tweet.findMany({ 
+            include: {  user: { select: {
+                id: true, name: true, username: true, image: true 
+            } } },
+
+        });
         res.status(200).json(allTweets);
     } catch (error) {
         res.status(400).json({error: 'Could not Fetch all tweets'})
@@ -41,7 +47,10 @@ router.get('/', async(req, res) => {
 
 router.get('/:id', async(req, res) => {
     const { id } = req.params
-    const result = await prisma.tweet.findUnique({ where: { id: Number(id) } })
+    const result = await prisma.tweet.findUnique({ 
+        where: { id: Number(id) },
+        include: { user:true }
+    })
 
     if(!result){
         return res.status(404).json({error: `Tweet not found`})
