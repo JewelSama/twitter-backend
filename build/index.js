@@ -17,7 +17,7 @@ app.use('/user', authmiddleware_1.authenticateToken, userRoutes_1.default);
 app.use('/tweet', authmiddleware_1.authenticateToken, tweetRoutes_1.default);
 app.use('/auth', authRoutes_1.default);
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('Hello World from Sama!!!!!');
 });
 app.listen(5000, () => {
     console.log(`Server running on port 5000`);
